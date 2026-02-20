@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Warriors Thrive — Web MVP (Static)</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="title">Warriors Thrive</div>
+      <div class="subtitle">2D board-game prototype (static, no build needed)</div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="mapper.html">Board Mapper</a>
+      <a class="btn" href="https://github.com" target="_blank" rel="noreferrer">GitHub</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card" id="setupCard">
+      <h1>Start a game</h1>
+      <p class="muted">
+        Option 1 (your choice): pass-and-play on one device. Up to 8 players total. If you choose 1 player,
+        the other 7 become AI teammates.
+      </p>
+
+      <div class="grid">
+        <div>
+          <label>Total players (1–8)</label>
+          <input id="playerCount" type="number" min="1" max="8" value="8" />
+          <div class="pill" id="aiCount">AI players: 7</div>
+        </div>
+        <div>
+          <label>Your name</label>
+          <input id="playerName" type="text" value="You" />
+          <label style="margin-top:12px">Your character</label>
+          <select id="playerChar"></select>
+          <div class="tiny muted" style="margin-top:10px">Abilities will be wired in once we finish the rule-to-code pass.</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <button class="btn primary" id="startBtn">Play</button>
+      </div>
+
+      <hr />
+      <p class="muted">
+        Hosting: this is a static site. You can upload these files to GitHub and deploy with Vercel as a “Static” project.
+        No Node install required.
+      </p>
+    </section>
+
+    <section class="game" id="game" hidden>
+      <div class="boardCard">
+        <div class="boardShell" id="boardShell">
+          <div class="boardStage" id="boardStage"></div>
+          <div class="boardHint">
+            <span class="pill">Pan: drag</span>
+            <span class="pill">Zoom: mouse wheel / trackpad</span>
+            <span class="pill">Green dots: legal moves</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="side">
+        <div class="card">
+          <h2>Spinner</h2>
+          <p class="muted">Tap spin. You can move any number of spaces up to the result.</p>
+
+          <div class="spinRow">
+            <div class="spinner" id="spinner"></div>
+            <div class="pill">Result: <b id="spinResult">—</b></div>
+          </div>
+
+          <div class="row" style="margin-top:12px">
+            <button class="btn primary" id="spinBtn">Spin</button>
+            <button class="btn" id="resetBtn">Reset</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Turn</h2>
+          <div class="muted">Current: <b id="currentPlayer">—</b></div>
+          <div class="muted">Delivered (team): <b id="delivered">0</b> / <b id="target">0</b></div>
+          <div class="muted">Cure unlocked: <b id="cure">NO</b></div>
+
+          <hr />
+
+          <h2>Players</h2>
+          <div id="playersList" class="list"></div>
+
+          <hr />
+
+          <div class="tiny muted">
+            MVP note: a Warrior question triggers when you land on node <code>H3</code>. Once you finish the board replica map,
+            we’ll tag the real Warrior spaces and lab doors.
+          </div>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="modalBackdrop" id="modalBackdrop" hidden>
+    <div class="card modal">
+      <div class="modalTop">
+        <h2 id="modalTitle">Warrior Card</h2>
+        <button class="btn" id="closeModalBtn">Close</button>
+      </div>
+      <hr />
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

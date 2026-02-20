@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Warriors Thrive — Board Mapper</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .mapper{display:grid;grid-template-columns: 1.6fr .9fr;gap:14px;align-items:start}
+    .boardStage{cursor:crosshair}
+    .small{font-size:12px;color:var(--muted)}
+    .line{position:absolute;inset:0;pointer-events:none}
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="title">Board Mapper</div>
+      <div class="subtitle">Click to add nodes. Add edges for movement rules.</div>
+    </div>
+    <div class="actions">
+      <a class="btn" href="index.html">Back to Game</a>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="card">
+      <h1>Make a replica movement map</h1>
+      <p class="muted">
+        Place nodes on every hallway square, plus special spots (IN, OUT, Hospital, lab doors).
+        Then add edges: cost <b>1</b> for adjacent hallway squares, cost <b>0</b> for doorway transitions.
+      </p>
+    </section>
+
+    <section class="mapper" style="margin-top:14px">
+      <div class="card">
+        <div class="row" style="justify-content:space-between">
+          <div>
+            <h2 style="margin:0">Board</h2>
+            <div class="small">Tip: start by placing IN, OUT, and Hospital, then fill hallway squares.</div>
+          </div>
+          <button class="btn primary" id="exportBtn">Export JSON</button>
+        </div>
+
+        <div class="boardShell" style="margin-top:10px">
+          <svg class="line" id="edgeSvg"></svg>
+          <div class="boardStage" id="stage"></div>
+        </div>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h2>Selected node</h2>
+          <div class="muted" id="selectedId">None</div>
+          <hr />
+
+          <label>Kind</label>
+          <select id="kindSel"></select>
+
+          <label style="margin-top:12px">Label (optional)</label>
+          <input id="labelInput" type="text" placeholder="IN, OUT, Hospital, Heart Door…" />
+
+          <div class="row">
+            <button class="btn" id="deleteBtn">Delete node</button>
+          </div>
+
+          <hr />
+
+          <h2>Add edge</h2>
+          <p class="muted">Defines legal movement. Cost 1 = one hallway space. Cost 0 = doorway transition.</p>
+
+          <label>From</label>
+          <select id="edgeFrom"></select>
+
+          <label style="margin-top:12px">To</label>
+          <select id="edgeTo"></select>
+
+          <label style="margin-top:12px">Cost</label>
+          <input id="edgeCost" type="number" min="0" max="8" value="1" />
+
+          <div class="row">
+            <button class="btn primary" id="addEdgeBtn">Add edge</button>
+          </div>
+        </div>
+
+        <div class="card" style="margin-top:14px">
+          <h2>Exported JSON</h2>
+          <textarea id="exportArea" style="height:240px" placeholder="Click Export JSON" readonly></textarea>
+          <div class="row">
+            <button class="btn primary" id="saveBtn">Save to this device</button>
+            <button class="btn" id="clearBtn">Clear saved map</button>
+          </div>
+          <p class="small">
+            Saved map is stored in your browser (localStorage). The game loads it automatically.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script src="mapper.js"></script>
+</body>
+</html>
